@@ -19,29 +19,36 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @ExperimentalAnimationApi
 @Composable
 fun Countdown(viewModel: MainViewModel) {
-    Column() {
+    Column {
         AnimatedVisibility(visible = viewModel.mode) {
             Timer(viewModel = viewModel)
         }
         AnimatedVisibility(visible = !viewModel.mode) {
             Input(viewModel = viewModel)
         }
-        Row() {
+        Row(modifier = Modifier.padding(90.dp, 20.dp)) {
             Button(onClick = { viewModel.onPlayButtonClicked() }) {
-                Text("Play")
+                Text("Start", fontSize = 20.sp)
             }
-            Button(onClick = { viewModel.pause() }) {
-                Text("Pause")
+            Button(modifier = Modifier.padding(10.dp, 0.dp), onClick = { viewModel.pause() }) {
+                Text("Pause", fontSize = 20.sp)
             }
         }
     }
@@ -53,9 +60,44 @@ fun Timer(
     viewModel: MainViewModel
 ) {
     Row {
-        Text(text = viewModel.minute)
-        Text(text = viewModel.second)
-        Text(text = viewModel.millis)
+        Card(
+            modifier = Modifier
+                .padding(20.dp)
+                .width(100.dp)
+                .height(50.dp),
+        ) {
+            Text(
+                modifier = Modifier.padding(30.dp, 10.dp),
+                text = viewModel.minute,
+                fontSize = 23.sp
+            )
+        }
+
+        Card(
+            modifier = Modifier
+                .padding(20.dp)
+                .width(100.dp)
+                .height(50.dp),
+        ) {
+            Text(
+                modifier = Modifier.padding(30.dp, 10.dp),
+                text = viewModel.second,
+                fontSize = 23.sp
+            )
+        }
+
+        Card(
+            modifier = Modifier
+                .padding(20.dp)
+                .width(100.dp)
+                .height(50.dp),
+        ) {
+            Text(
+                modifier = Modifier.padding(30.dp, 10.dp),
+                text = viewModel.millis,
+                fontSize = 23.sp
+            )
+        }
     }
 }
 
@@ -65,8 +107,35 @@ fun Input(
     viewModel: MainViewModel
 ) {
     Row {
-        TextField(value = viewModel.minute, onValueChange = { viewModel.minute = it })
-        TextField(value = viewModel.second, onValueChange = { viewModel.second = it })
-        TextField(value = viewModel.millis, onValueChange = { viewModel.millis = it })
+        TextField(
+            modifier = Modifier
+                .padding(20.dp)
+                .width(100.dp)
+                .height(50.dp),
+            value = viewModel.minute,
+            onValueChange = { viewModel.minute = it },
+            label = { Text(text = "minute") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        )
+        TextField(
+            modifier = Modifier
+                .padding(20.dp)
+                .width(100.dp)
+                .height(50.dp),
+            value = viewModel.second,
+            onValueChange = { viewModel.second = it },
+            label = { Text(text = "second") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        )
+        TextField(
+            modifier = Modifier
+                .padding(20.dp)
+                .width(100.dp)
+                .height(50.dp),
+            value = viewModel.millis,
+            onValueChange = { viewModel.millis = it },
+            label = { Text(text = "millisecond") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        )
     }
 }

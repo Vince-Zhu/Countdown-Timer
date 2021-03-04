@@ -28,7 +28,7 @@ const val MILLIS_FORMAT: String = "%03d"
 
 class MainViewModel : ViewModel() {
     var mode: Boolean by mutableStateOf(false)
-    var minute: String by mutableStateOf(String.format(TIME_FORMAT, 0))
+    var minute: String by mutableStateOf(String.format(TIME_FORMAT, 2))
     var second: String by mutableStateOf(String.format(TIME_FORMAT, 0))
     var millis: String by mutableStateOf(String.format(MILLIS_FORMAT, 0))
 
